@@ -152,6 +152,12 @@ $(BIN_DIR)/test_monitor_xml: ./test_monitor_xml.c
 		-Wl,--start-group \
 		-lcmocka $< -Wl,--end-group -o $@
 
+$(BIN_DIR)/test_safe_fopen: ./test_safe_fopen.c $(OBJ_DIR)/common.o
+	mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) \
+		-Wl,--start-group \
+		-lcmocka $(OBJ_DIR)/common.o $< -Wl,--end-group -o $@
+
 .PHONY: run
 run: $(TESTS)
 	@echo "Running pqos Unit Tests"
@@ -187,6 +193,7 @@ checkpatch:
 	-f test_monitor_utils.c \
 	-f test_monitor_xml.c \
 	-f test_profiles.c \
+	-f test_safe_fopen.c \
 	-f mock/mock_alloc.c \
 	-f mock/mock_alloc.h \
 
